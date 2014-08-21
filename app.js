@@ -10,6 +10,9 @@ var session = require('express-session');
 var passport = require('passport');
 var config = {};
 
+// View helpers
+var moment = require('moment');
+
 // Database
 var mongoose = require('mongoose');
 config.db = require('./config/database.js');
@@ -29,9 +32,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(session({secret: '97ba74d6ad6634e4e480d9619d1623dd'}));
-app.use(passport.initalize());
+app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+
+// Locals
+
+app.locals.moment = moment;
+app.use(function(req, res, next) {
+    res.locals.user = req.user;
+    next();
+});
 
 // Routing
 var routes = require('./routes/index');
@@ -68,6 +79,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;

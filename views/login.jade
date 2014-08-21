@@ -1,0 +1,11 @@
+extends layout/scaffolding
+
+block main
+    h1 Login
+    each message in messages
+        p=message
+    form(action="/login", method="POST")
+        input(type="email", name="email")
+        input(type="password", name="password")
+        button(type="submit") Login
+    a(href="/register") Register

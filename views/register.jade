@@ -1,0 +1,23 @@
+extends layout/scaffolding
+
+block main
+    h1 Register
+    each message in messages
+        p=message
+    form(action="/register", method="POST")
+        label
+            | Email
+            input(type="email", name="email")
+        label
+            | Password
+            input(type="password", name="password")
+        label
+            | Confirm password
+            input(type="password", name="confirmPassword")
+        label
+            | First name
+            input(type="text", name="firstName")
+        label
+            | Last name
+            input(type="text", name="lastName")
+        button(type="submit") Register
