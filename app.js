@@ -45,10 +45,10 @@ app.use(function(req, res, next) {
 
 // Routing
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var project = require('./routes/project');
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/project', project);
 
 app.use(express.static(path.join(__dirname, 'public')));
 

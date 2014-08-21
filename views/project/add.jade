@@ -1,0 +1,9 @@
+extends ../layout/scaffolding
+
+block main
+    h1 Add project
+    each message in messages
+        p=message
+    form(action="/project/add", method="POST")
+        +input("text", "Name", "name")
+        button(type="submit") Create project

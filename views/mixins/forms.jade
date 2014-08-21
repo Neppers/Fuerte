@@ -1,0 +1,27 @@
+mixin input(type, label, path, placeholder, labelClass)
+    .form-group
+        label(for=path, class=labelClass)=label
+        input.form-control&attributes(attributes)(type=type, id=path, name=path, placeholder=placeholder)
+mixin checkbox(label, path)
+    .checkbox
+        label
+            input(type="checkbox", name=path)
+            | #{label}
+mixin radio(label, path)
+    .radio
+        label
+            input(type="radio", name=path)
+            | #{label}
+mixin textarea(label, path, labelClass, rows)
+    if !rows
+        - rows = 3
+    .form-group
+        label(for=path, class=labelClass)=label
+        textarea.form-control&attributes(attributes)(id=path, name=path, rows=rows)
+            block
+mixin submit(text, buttonType)
+    if !buttonType
+        - buttonType = 'btn-default'
+    else
+        - buttonType = 'btn-' + buttonType
+    input.btn&attributes(attributes)(class=buttonType, type="submit", value=text)

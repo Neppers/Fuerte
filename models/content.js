@@ -13,6 +13,10 @@ var contentSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    path: {
+        type: String,
+        required: true
+    },
     body: String,
     created: {
         type: Date,

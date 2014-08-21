@@ -25,17 +25,17 @@ module.exports = function(passport) {
             if (user) {
                 return done(null, false, { message: 'Email address is already in use' });
             } else {
-                var user = new User();
-                user.local.email = email;
-                user.local.password = user.generateHash(password);
-                user.role = "writer";
-                user.firstName = req.body.firstName;
-                user.lastName = req.body.lastName;
-                user.created = user.lastLogin = Date.now();
-                user.save(function(err) {
+                var newUser = new User();
+                newUser.local.email = email;
+                newUser.local.password = newUser.generateHash(password);
+                newUser.role = "writer";
+                newUser.firstName = req.body.firstName;
+                newUser.lastName = req.body.lastName;
+                newUser.created = newUser.lastLogin = Date.now();
+                newUser.save(function(err) {
                     if (err)
                         throw err;
-                    return done(null, user);
+                    return done(null, newUser);
                 });
             }
         });

@@ -2,11 +2,18 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 
+var Project = require('../models/project');
+
 /* GET home page. */
 router.get('/', function(req, res) {
     if (!req.isAuthenticated())
         res.redirect('/login');
-    res.render('index', { title: 'Fuerte' });
+    Project.find({}, function(err, projects) {
+        if (err)
+            throw err;
+        res.render('index', { title: 'Fuerte', projects: projects });
+    });
+
 });
 
 /* GET login */

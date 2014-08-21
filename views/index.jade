@@ -1,6 +1,12 @@
-extends layout
+extends layout/scaffolding
 
-block content
-  h1= title
-  p Welcome to #{title}
-  a(href="/logout") Logout
+block main
+    h1= title
+    p Welcome to #{title}
+    if projects
+        ul
+            each project in projects
+                li #{project.name} (#{moment(project.created).format('DD/MM/YYYY')})
+    ul
+        li: a(href="/project/add") Create project
+        li: a(href="/logout") Logout
