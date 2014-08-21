@@ -46,9 +46,11 @@ app.use(function(req, res, next) {
 // Routing
 var routes = require('./routes/index');
 var project = require('./routes/project');
+var content = require('./routes/content');
 
 app.use('/', routes);
 app.use('/project', project);
+app.use('/content', content);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
