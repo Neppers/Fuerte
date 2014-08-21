@@ -37,7 +37,6 @@ app.use(passport.session());
 app.use(flash());
 
 // Locals
-
 app.locals.moment = moment;
 app.use(function(req, res, next) {
     res.locals.user = req.user;
