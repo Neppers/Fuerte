@@ -13,7 +13,11 @@ router.get('/content/:id', function(req, res, next) {
         Content.findOne({
             'path': req.params.id
         }).populate('_author children').exec(function(err, content) {
-            res.json(content);
+            Content.populate(content, {
+                path: 'children.children'
+            }, function(err, content) {
+                res.json(content);
+            });
         });
     }
 });
