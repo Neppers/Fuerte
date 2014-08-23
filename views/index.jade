@@ -6,7 +6,9 @@ block main
     if projects
         ul
             each project in projects
-                li #{project.name} (#{moment(project.created).format('DD/MM/YYYY')})
+                li
+                    | #{project.name} (#{moment(project.created).format('DD/MM/YYYY')}) 
+                    a(href="/project/view/#{project._id}") Manage
     ul
         li: a(href="/project/add") Create project
         li: a(href="/logout") Logout

@@ -1,0 +1,16 @@
+extends ../layout/scaffolding
+
+block main
+    h1=project.name
+    h2=moment(project.created).format('DD/MM/YYYY')
+    if content
+        ul
+            each item in content
+                li
+                    | #{item.title} 
+                    a(href="/content/add-child/#{item._id}") Add content
+                    if item.children.length > 0
+                        ul
+                            each child in item.children
+                                li=child.title
+    a(href="/content/add") Add content

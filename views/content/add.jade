@@ -1,0 +1,14 @@
+extends ../layout/scaffolding
+
+block main
+    h1 Add content
+
+    - formAction = (parent) ? '/content/add-child/' + parent : '/content/add'
+
+    form(action=formAction, method="POST")
+        +input("text", "Title", "title")
+        +input("text", "Path", "path")
+        +textarea("Content", "body")
+        +input("text", "Meta description", "meta.description")
+        +input("text", "Meta keywords", "meta.keywords")
+        +submit("Add content")

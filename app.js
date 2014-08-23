@@ -47,8 +47,20 @@ app.use(function(req, res, next) {
 var routes = require('./routes/index');
 var project = require('./routes/project');
 var content = require('./routes/content');
+var api = require('./routes/api');
 
 app.use('/', routes);
+app.use('/api', api);
+
+app.all('*', function(req, res, next) {
+    if (req.isAuthenticated()) {
+        next();
+    } else {
+        res.location('/login');
+        res.redirect('/login');
+    }
+});
+
 app.use('/project', project);
 app.use('/content', content);
 

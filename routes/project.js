@@ -2,11 +2,6 @@ var express = require('express');
 var router = express.Router();
 var Project = require('../models/project');
 var Content = require('../models/content');
-var isAuthenticated = require('../middleware/authentication');
-
-router.all('*', isAuthenticated, function(req, res, next) {
-    next();
-});
 
 /* GET project add */
 router.get('/add', function(req, res) {
@@ -35,6 +30,25 @@ router.post('/add', function(req, res, next) {
                 }
             });
         }
+    });
+});
+
+/* GET project view */
+router.get('/view/:id', function(req, res, next) {
+    Project.findById(req.params.id, function(err, project) {
+        if (err) return next(err);
+        if (!project) return next(new Error(404));
+        Content.find({
+            '_project': req.params.id,
+            '_parent': {$exists: false}
+        }).populate('children').exec(function(err, content) {
+            if (err) return next(err);
+            req.session.project = req.params.id;
+            res.render('project/view', {
+                project: project,
+                content: content
+            });
+        });
     });
 });
 
