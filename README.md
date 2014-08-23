@@ -1,3 +1,3 @@
 # Fuerte
 
-Because fuck RedDot, that's why!
+Because f@\!\# RedDot, that's why!
