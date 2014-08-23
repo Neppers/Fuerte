@@ -1,4 +1,21 @@
 var express = require('express');
 var router = express.Router();
+var mongoose = require('mongoose');
+
+var Content = require('../models/content');
+
+router.get('/content/:id', function(req, res, next) {
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+        Content.findById(req.params.id).populate('children _author').exec(function(err, content) {
+            res.json(content);
+        });
+    } else {
+        Content.findOne({
+            'path': req.params.id
+        }).populate('_author children').exec(function(err, content) {
+            res.json(content);
+        });
+    }
+});
 
 module.exports = router;

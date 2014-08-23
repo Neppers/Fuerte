@@ -47,6 +47,15 @@ var contentSchema = mongoose.Schema({
 
 contentSchema.set('toObject', { virtuals: true });
 
+contentSchema.set('toJSON', {
+    virtuals: true,
+    transform: function(doc, res) {
+        delete res._id;
+        delete res.__v;
+        return res;
+    }
+});
+
 var Content = mongoose.model('Content', contentSchema);
 
 contentSchema.virtual('plain').get(function() {
