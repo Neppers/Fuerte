@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var Content = require('../models/content');
+var isAuthenticated = require('../middleware/authentication');
+
+router.all('*', isAuthenticated, function(req, res, next) {
+    next();
+});
 
 /* GET content */
 router.get('/:id', function(req, res, next) {

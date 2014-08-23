@@ -2,6 +2,11 @@ var express = require('express');
 var router = express.Router();
 var Project = require('../models/project');
 var Content = require('../models/content');
+var isAuthenticated = require('../middleware/authentication');
+
+router.all('*', isAuthenticated, function(req, res, next) {
+    next();
+});
 
 /* GET project add */
 router.get('/add', function(req, res) {
