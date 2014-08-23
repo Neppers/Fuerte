@@ -9,13 +9,11 @@ router.get('/add', function(req, res) {
 });
 
 /* POST project add */
-router.post('/add', function(req, res) {
+router.post('/add', function(req, res, next) {
     Project.findOne({'name': req.body.name}, function(err, project) {
-        if (err)
-            req.flash('error', 'An error occurred');
-        if (project)
+        if (err) return next(err);
+        if (project) {
             req.flash('error', 'Project with name already exists');
-        if (err || project) {
             res.redirect('/project/add');
         } else {
             var newProject = new Project();

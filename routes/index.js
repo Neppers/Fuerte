@@ -5,15 +5,13 @@ var passport = require('passport');
 var Project = require('../models/project');
 
 /* GET home page. */
-router.get('/', function(req, res) {
+router.get('/', function(req, res, next) {
     if (!req.isAuthenticated())
         res.redirect('/login');
     Project.find({}, function(err, projects) {
-        if (err)
-            throw err;
+        if (err) return next(err);
         res.render('index', { title: 'Fuerte', projects: projects });
     });
-
 });
 
 /* GET login */

@@ -9,6 +9,10 @@ var contentSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    _parent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Content'
+    },
     title: {
         type: String,
         required: true
@@ -26,6 +30,7 @@ var contentSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    tags: [String],
     meta: {
         description: String,
         keywords: [String],

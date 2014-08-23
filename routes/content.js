@@ -3,16 +3,12 @@ var router = express.Router();
 var Content = require('../models/content');
 
 /* GET content */
-router.get('/:id', function(req, res) {
+router.get('/:id', function(req, res, next) {
     Content.findById(req.params.id).populate('_author _project').exec(function(err, content) {
-        if (err) {
-            req.flash('error', 'An error occurred');
-            res.redirect('back');
-        } else {
-            res.render('content/view', {
-                content: content
-            });
-        }
+        if (err) return next(err);
+        res.render('content/view', {
+            content: content
+        });
     });
 });
 
