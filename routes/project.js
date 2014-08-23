@@ -43,10 +43,15 @@ router.get('/view/:id', function(req, res, next) {
             '_parent': {$exists: false}
         }).populate('children').exec(function(err, content) {
             if (err) return next(err);
-            req.session.project = req.params.id;
-            res.render('project/view', {
-                project: project,
-                content: content
+            Content.populate(content, {
+                path: 'children.children'
+            }, function(err, content) {
+                if (err) return next(err);
+                req.session.project = req.params.id;
+                res.render('project/view', {
+                    project: project,
+                    content: content
+                });
             });
         });
     });

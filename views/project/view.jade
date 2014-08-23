@@ -13,4 +13,8 @@ block main
                         ul
                             each child in item.children
                                 li=child.title
+                                    if child.children.length >0 
+                                        ul
+                                            each c in child.children
+                                                li=c.title
     a(href="/content/add") Add content
