@@ -24,4 +24,4 @@ mixin submit(text, buttonType)
         - buttonType = 'btn-default'
     else
         - buttonType = 'btn-' + buttonType
-    button.btn&attributes(attributes)(class=buttonType, type="submit", value=text)
+    button.btn&attributes(attributes)(class=buttonType, type="submit") #{text}

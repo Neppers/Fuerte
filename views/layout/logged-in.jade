@@ -5,4 +5,7 @@ block main
         include ../modules/navigation
         main
             .container-fluid: .row: .col-xs-12
+                if project
+                    ol.breadcrumb
+                        li Current project: #{project.name}
                 block content

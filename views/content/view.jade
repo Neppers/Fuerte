@@ -1,9 +1,10 @@
 extends ../layout/logged-in
 
 block content
-    h1
-        | #{content.title} 
-        small #{project.url + content.path}
+    .page-header
+        h1
+            | #{content.title} 
+            small #{project.url + content.path}
     .row
         .col-sm-4
             dl

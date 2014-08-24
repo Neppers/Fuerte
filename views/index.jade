@@ -1,9 +1,7 @@
 extends layout/logged-in
 
 block content
-    if project
-        h1 Current project: #{project.name}
-    else
+    .page-header
         h1 Select a project
     if projects
         table.table

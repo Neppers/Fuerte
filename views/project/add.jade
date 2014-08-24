@@ -1,7 +1,8 @@
 extends ../layout/logged-in
 
 block content
-    h1 Add project
+    .page-header
+        h1 Add project
     +messages(messages)
     form.form(action="/project/add", method="POST")
         +input("text", "Name", "name")
