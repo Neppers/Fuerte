@@ -3,7 +3,7 @@ extends ../layout/logged-in
 block content
     h1
         | #{content.title} 
-        small /#{content.path}
+        small #{project.url + content.path}
     .row
         .col-sm-4
             dl

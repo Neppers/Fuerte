@@ -63,6 +63,7 @@ var routes = require('./routes/index');
 var project = require('./routes/project');
 var content = require('./routes/content');
 var api = require('./routes/api');
+var inbox = require('./routes/inbox');
 
 app.use('/', routes);
 app.use('/api', api);
@@ -78,6 +79,7 @@ app.all('*', function(req, res, next) {
 
 app.use('/project', project);
 app.use('/content', content);
+app.use('/inbox', inbox);
 
 // Error handlers
 app.use(function(req, res, next) {

@@ -1,14 +1,15 @@
 nav.main-nav(role="navigation")
     ul
-        +main-nav-item('Inbox', '#nyi', 'icon-stack')
         +main-nav-item('Projects', '/', 'icon-wallet')
         if session.project
+            +main-nav-item('Inbox', '/inbox', 'icon-stack')
             +main-nav-item('Content', '/content', 'icon-pen')
             +main-nav-item('Search', '#nyi', 'icon-search')
             +main-nav-item('Assets', '#nyi', 'icon-photo')
             +main-nav-item('Snippets', '#nyi', 'icon-bubble')
             +main-nav-item('Tags', '#nyi', 'icon-tag')
         else
+            +main-nav-item('Inbox', '#', 'icon-stack')
             +main-nav-item('Content', '#', 'icon-pen')
             +main-nav-item('Search', '#nyi', 'icon-search')
             +main-nav-item('Assets', '#nyi', 'icon-photo')

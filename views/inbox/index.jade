@@ -1,0 +1,18 @@
+extends ../layout/logged-in
+    
+block content
+    h1 Inbox
+    if content.length > 0
+        h3 Items awaiting approval
+        table.table
+            tbody
+                each item in content
+                    tr
+                        td=item.title
+                        td=item._author.fullName
+                        td=item._project.name
+                        td: a.btn.btn-success(href="/content/publish/#{item.id}")
+                            span.icon.icon-paperplane
+                            | Publish
+    else
+        p No outstanding tasks

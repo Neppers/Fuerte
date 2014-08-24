@@ -23,6 +23,7 @@ router.post('/add', function(req, res, next) {
         } else {
             var newProject = new Project();
             newProject.name = req.body.name;
+            newProject.url = req.body.url;
             newProject.save(function(err) {
                 if (err) {
                     Object.keys(err.errors).forEach(function(key) {

@@ -5,6 +5,10 @@ var projectSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    url: {
+        type: String,
+        required: true
+    },
     created: {
         type: Date,
         default: Date.now

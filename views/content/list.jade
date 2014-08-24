@@ -36,7 +36,7 @@ block content
         .page-header
             h1
                 | #{project.name}  
-                small Created #{moment(project.created).format('DD/MM/YYYY')}
+                small=project.url
         if content.length > 0
             table.table.table-content
                 thead

@@ -70,11 +70,11 @@ main {
         color: #fff;
       }
       &[href^="#"] {
-        opacity: .7;
+        opacity: .5;
         pointer-events: none;
       }
       &[href="#nyi"] {
-        opacity: .3;
+        opacity: .15;
       }
       &.is-current {
         border-right: 5px solid lighten($color-nav, 30%);
