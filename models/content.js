@@ -42,7 +42,11 @@ var contentSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Content'
         }
-    ]
+    ],
+    status: {
+        type: String,
+        default: 'draft'
+    }
 });
 
 contentSchema.set('toObject', { virtuals: true });

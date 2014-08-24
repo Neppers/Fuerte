@@ -1,6 +1,7 @@
 extends layout/scaffolding
 
 block main
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+    .container: .row: .col-xs-12
+        h1= message
+        h2= error.status
+        pre #{error.stack}

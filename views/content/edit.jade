@@ -1,0 +1,13 @@
+extends ../layout/logged-in
+    
+block content
+    h1 Edit #{content.title}
+    
+    form(action="/content/edit/#{content.id}", method="POST")
+        +input("text", "Title", "title")(value=content.title)
+        +input("text", "Path", "path")(value=content.path)
+        +textarea("Content", "body")
+            | #{content.body}
+        +input("text", "Meta description", "meta.description")(value=content.meta.description)
+        +input("text", "Meta keywords", "meta.keywords")(value=content.meta.keywords)
+        +submit("Save content")

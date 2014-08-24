@@ -1,0 +1,37 @@
+extends ../layout/logged-in
+
+block content
+    h1
+        | #{content.title} 
+        small /#{content.path}
+    .row
+        .col-sm-4
+            dl
+                dt Status
+                dd=content.status
+                dt Tags
+                if content.tags.length > 0
+                    dd=content.tags.join(', ')
+                else
+                    dd No tags
+                dt Meta description
+                dd NYI
+                dt Meta keywords
+                dd NYI
+                dt Taxonomy terms
+                dd NYI
+        .col-sm-4
+            dl
+                dt Created
+                dd=moment(content.created).format('DD/MM/YYYY HH:mm')
+                dt Last modified
+                dd=moment(content.modified).format('DD/MM/YYYY HH:mm')
+        .col-sm-4
+            dl
+                dt Author
+                dd=content._author.fullName
+                dt Last login
+                dd=moment(content._author.lastLogin).format('DD/MM/YYYY HH:mm')
+                dt Email
+                dd=content._author.local.email
+    .content=content.body

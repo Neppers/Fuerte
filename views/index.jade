@@ -6,10 +6,16 @@ block content
     else
         h1 Select a project
     if projects
-        ul
-            each project in projects
-                li
-                    | #{project.name} (#{moment(project.created).format('DD/MM/YYYY')}) 
-                    a(href="/project/select/#{project._id}") Select
-    ul
-        li: a(href="/project/add") Create project
+        table.table
+            thead
+                tr
+                    th Name
+                    th Created
+                    th Actions
+            tbody
+                each project in projects
+                    tr
+                        td=project.name
+                        td=moment(project.created).format('DD/MM/YYYY')
+                        td: a.btn.btn-default(href="/project/select/#{project.id}") Select
+    a.btn.btn-default(href="/project/add") Create new project

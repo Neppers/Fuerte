@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
     Content.find({
         '_project': req.session.project,
         '_parent': { $exists: false }
-    }).populate('children').exec(function(err, content) {
+    }).populate('children _author').exec(function(err, content) {
         if (err) return next(err);
         Content.populate(content, {
             path: 'children.children'
@@ -116,14 +116,30 @@ router.post('/add-child/:parent', checkProjectId, function(req, res, next) {
 
 /* GET edit content */
 router.get('/edit/:id', function(req, res) {
-    //TODO: Add route for editting content
-    res.render('content/edit');
+    Content.findById(req.params.id, function(err, content) {
+        if (err) return next(err);
+        res.render('content/edit', {
+            content: content
+        });
+    });
 });
 
 /* POST edit content */
-router.get('/edit/:id', function(req, res) {
-    //TODO: Add route for posting content
-    res.render('content/edit');
+router.post('/edit/:id', function(req, res) {
+    Content.findByIdAndUpdate(req.params.id, {
+        title: req.body.title,
+        body: req.body.body,
+        path: req.body.path,
+        meta: {
+            description: req.body['meta.description'],
+            keywords: req.body['meta.keywords'].split(',').map(function(s) { return s.trim() })
+        },
+        modified: Date.now()
+    }, function(err, content) {
+        if (err) return next(err);
+        req.flash('success', 'Content updated');
+        res.redirect('/content');
+    });
 });
 
 /* GET delete content */
@@ -135,13 +151,46 @@ router.get('/delete/:id', function(req, res) {
             req.flash('error', 'Cannot delete content that has children');
             res.redirect('/content');
         } else {
-            content.remove(function(err) {
+            content.remove(function(err, content) {
                 if (err) return next(err);
-                //TODO: We need to delete child from all parent children array
-                req.flash('success', 'Content deleted successfully');
-                res.redirect('/content')
+                Content.update({
+                    children: {
+                        $in: [content.id]
+                    }
+                }, {
+                    $pull: {
+                        "children": content.id
+                    }
+                }, function(err, result) {
+                    if (err) return next(err);
+                    req.flash('success', 'Content deleted successfully');
+                    res.redirect('/content')
+                });
+                
             });
         }
+    });
+});
+
+/* GET publish content */
+router.get('/publish/:id', function(req, res) {
+    Content.findByIdAndUpdate(req.params.id, {
+        status: 'published'
+    }, function(err, content) {
+        if (err) return next(err);
+        req.flash('success', content.title + ' published');
+        res.redirect('/content');
+    });
+});
+
+/* GET draft content */
+router.get('/draft/:id', function(req, res) {
+    Content.findByIdAndUpdate(req.params.id, {
+        status: 'draft'
+    }, function(err, content) {
+        if (err) return next(err);
+        req.flash('success', content.title + ' returned to draft status');
+        res.redirect('/content');
     });
 });
 

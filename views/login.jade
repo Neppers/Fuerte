@@ -1,11 +1,11 @@
 extends layout/scaffolding
 
 block main
-    h1 Login
-    each message in messages
-        p=message
-    form(action="/login", method="POST")
-        input(type="email", name="email")
-        input(type="password", name="password")
-        button(type="submit") Login
-    a(href="/register") Register
+    .container: .row: .col-sm-4.col-sm-offset-4
+        h1 Login
+        +messages(messages)
+        form(action="/login", method="POST")
+            +input("email", "Email", "email", "Email address", "sr-only")
+            +input("password", "Password", "password", "Password", "sr-only")
+            button.btn.btn-default(type="submit") Login
+            a.btn.btn-link(href="/register") Register

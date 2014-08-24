@@ -2,8 +2,7 @@ extends ../layout/logged-in
 
 block content
     h1 Add project
-    each message in messages
-        p=message
-    form(action="/project/add", method="POST")
+    +messages(messages)
+    form.form(action="/project/add", method="POST")
         +input("text", "Name", "name")
-        button(type="submit") Create project
+        button.btn.btn-default(type="submit") Create project

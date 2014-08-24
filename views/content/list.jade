@@ -1,33 +1,62 @@
 extends ../layout/logged-in
 
-mixin actions(id)
-    a(href="/content/add-child/#{id}") Add
-    | 
-    a(href="/content/edit/#{id}") Edit
-    | 
-    a(href="/content/delete/#{id}") Delete
+mixin actions(id, grandchild)
+    .btn-group
+        a.btn.btn-default(href="/content/view/#{id}") View
+        if !grandchild
+            a.btn.btn-default(href="/content/add-child/#{id}") Add child
+        a.btn.btn-default(href="/content/edit/#{id}") Edit
+        a.btn.btn-default(href="/content/delete/#{id}") Delete
+
+mixin table-row(item, grandchild)
+    - var statusClass = 'label-default'
+    if item.status == 'draft'
+        - statusClass = 'label-warning'
+    if item.status == 'published'
+        - statusClass = 'label-success'
+    tr&attributes(attributes)
+        td=item.title
+        td: span.label(class=statusClass)=item.status
+        td=item._author.fullName
+        td=moment(item.modified).format('DD/MM/YYYY HH:mm')
+        td: +actions(item.id, grandchild)
+        td: a.btn.btn-default(href="/api/content/#{item.id}") JSON
+        td
+            if item.status == 'published'
+                a.btn.btn-warning(href="/content/draft/#{item.id}")
+                    span.icon.icon-fire
+                    | Unpublish
+            if item.status == 'draft'
+                a.btn.btn-success(href="/content/publish/#{item.id}")
+                    span.icon.icon-paperplane
+                    | Publish
 
 block content
-    each message in messages
-        p=message
-    h1=project.name
-    h2=moment(project.created).format('DD/MM/YYYY')
-    if content
-        ul
-            each item in content
-                li
-                    | #{item.title} 
-                    +actions(item._id)
-                    if item.children.length > 0
-                        ul
+        +messages(messages)
+        .page-header
+            h1
+                | #{project.name}  
+                small Created #{moment(project.created).format('DD/MM/YYYY')}
+        if content.length > 0
+            table.table.table-content
+                thead
+                    tr
+                        th Title
+                        th Status
+                        th Author
+                        th Last modified
+                        th Actions
+                        th JSON
+                        th Publish
+                tbody
+                    each item in content
+                        +table-row(item)
+                        if item.children.length > 0
                             each child in item.children
-                                li
-                                    | #{child.title} 
-                                    +actions(child._id)
-                                    if child.children.length > 0
-                                        ul
-                                            each c in child.children
-                                                li
-                                                    | #{c.title} 
-                                                    +actions(c._id)
-    a(href="/content/add") Add content
+                                +table-row(child)(class="content-child")
+                                if child.children.length > 0
+                                    each c in child.children
+                                        +table-row(c, true)(class="content-grandchild")
+        else
+            p This project has no content
+        a.btn.btn-default(href="/content/add") Add content
