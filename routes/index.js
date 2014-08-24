@@ -10,6 +10,7 @@ router.get('/', function(req, res, next) {
         res.redirect('/login');
     Project.find({}, function(err, projects) {
         if (err) return next(err);
+        res.locals.currentSection = 'Projects';
         res.render('index', { title: 'Fuerte', projects: projects });
     });
 });

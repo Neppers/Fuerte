@@ -3,6 +3,11 @@ var router = express.Router();
 var Project = require('../models/project');
 var Content = require('../models/content');
 
+router.all('*', function(req, res, next) {
+    res.locals.currentSection = 'Projects';
+    next();
+});
+
 /* GET project add */
 router.get('/add', function(req, res) {
     res.render('project/add', { messages: req.flash() });
@@ -33,27 +38,13 @@ router.post('/add', function(req, res, next) {
     });
 });
 
-/* GET project view */
-router.get('/view/:id', function(req, res, next) {
+/* GET project select */
+router.get('/select/:id', function(req, res, next) {
     Project.findById(req.params.id, function(err, project) {
         if (err) return next(err);
         if (!project) return next(new Error(404));
-        Content.find({
-            '_project': req.params.id,
-            '_parent': {$exists: false}
-        }).populate('children').exec(function(err, content) {
-            if (err) return next(err);
-            Content.populate(content, {
-                path: 'children.children'
-            }, function(err, content) {
-                if (err) return next(err);
-                req.session.project = req.params.id;
-                res.render('project/view', {
-                    project: project,
-                    content: content
-                });
-            });
-        });
+        req.session.project = req.params.id;
+        res.redirect('/content');
     });
 });
 

@@ -10,6 +10,30 @@ var checkProjectId = function(req, res, next) {
     next();
 };
 
+router.all('*', function(req, res, next) {
+    res.locals.currentSection = 'Content';
+    next();
+});
+
+/* GET content tree */
+router.get('/', function(req, res, next) {
+    if (!req.session.project) return next(new Error(400));
+    Content.find({
+        '_project': req.session.project,
+        '_parent': { $exists: false }
+    }).populate('children').exec(function(err, content) {
+        if (err) return next(err);
+        Content.populate(content, {
+            path: 'children.children'
+        }, function(err, content) {
+            if (err) return next(err);
+            res.render('content/list', {
+                content: content
+            });
+        });
+    });
+});
+
 /* GET content */
 router.get('/view/:id', function(req, res, next) {
     Content.findById(req.params.id).populate('_author _project').exec(function(err, content) {
@@ -53,7 +77,7 @@ router.post('/add', checkProjectId, function(req, res, next) {
         content.save(function(err) {
             if (err) return next(err);
             req.flash('success', 'Content created');
-            res.redirect('/project/view/' + project._id);
+            res.redirect('/content');
         });
     });
 });
@@ -84,7 +108,7 @@ router.post('/add-child/:parent', checkProjectId, function(req, res, next) {
             }, function(err) {
                 if (err) return next(err);
                 req.flash('success', 'Content created');
-                res.redirect('/project/view/' + project._id);
+                res.redirect('/content');
             });
         });
     });
@@ -104,8 +128,21 @@ router.get('/edit/:id', function(req, res) {
 
 /* GET delete content */
 router.get('/delete/:id', function(req, res) {
-    //TODO: Add route for deleting content
-    res.render('/');
+    Content.findById(req.params.id, function(err, content) {
+        if (err) return next(err);
+        if (!content) return next(new Error(400));
+        if (content.children.length > 0) {
+            req.flash('error', 'Cannot delete content that has children');
+            res.redirect('/content');
+        } else {
+            content.remove(function(err) {
+                if (err) return next(err);
+                //TODO: We need to delete child from all parent children array
+                req.flash('success', 'Content deleted successfully');
+                res.redirect('/content')
+            });
+        }
+    });
 });
 
 module.exports = router;
