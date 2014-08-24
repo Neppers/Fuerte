@@ -47,7 +47,6 @@ app.use(function(req, res, next) {
     next();
 });
 app.use(function(req, res, next) {
-    console.log(req.session.project)
     if (req.session.project) {
         Project.findById(req.session.project, function(err, project) {
             if (err) return next(err);
@@ -67,8 +66,6 @@ var api = require('./routes/api');
 
 app.use('/', routes);
 app.use('/api', api);
-
-
 
 app.all('*', function(req, res, next) {
     if (req.isAuthenticated()) {

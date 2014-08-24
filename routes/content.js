@@ -10,6 +10,11 @@ var checkProjectId = function(req, res, next) {
     next();
 };
 
+router.all('*', function(req, res, next) {
+    res.locals.currentSection = 'Content';
+    next();
+});
+
 /* GET content tree */
 router.get('/', function(req, res, next) {
     if (!req.session.project) return next(new Error(400));

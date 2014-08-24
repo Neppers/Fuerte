@@ -68,6 +68,9 @@ h1, h2, h3 {
         opacity: .5;
         pointer-events: none;
       }
+      &.is-current {
+        border-right: 5px solid lighten($color-nav, 30%);
+      }
     }
   }
 }

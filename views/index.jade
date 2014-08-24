@@ -1,8 +1,8 @@
 extends layout/logged-in
 
 block content
-    if session.projectName
-        h1 Current project: #{session.projectName}
+    if project
+        h1 Current project: #{project.name}
     else
         h1 Select a project
     if projects

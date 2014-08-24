@@ -3,6 +3,11 @@ var router = express.Router();
 var Project = require('../models/project');
 var Content = require('../models/content');
 
+router.all('*', function(req, res, next) {
+    res.locals.currentSection = 'Projects';
+    next();
+});
+
 /* GET project add */
 router.get('/add', function(req, res) {
     res.render('project/add', { messages: req.flash() });
