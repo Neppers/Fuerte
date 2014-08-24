@@ -1,6 +1,6 @@
-extends ../layout/scaffolding
+extends ../layout/logged-in
 
-block main
+block content
     h1 Add content
 
     - formAction = (parent) ? '/content/add-child/' + parent : '/content/add'

@@ -10,6 +10,25 @@ var checkProjectId = function(req, res, next) {
     next();
 };
 
+/* GET content tree */
+router.get('/', function(req, res, next) {
+    if (!req.session.project) return next(new Error(400));
+    Content.find({
+        '_project': req.session.project,
+        '_parent': { $exists: false }
+    }).populate('children').exec(function(err, content) {
+        if (err) return next(err);
+        Content.populate(content, {
+            path: 'children.children'
+        }, function(err, content) {
+            if (err) return next(err);
+            res.render('content/list', {
+                content: content
+            });
+        });
+    });
+});
+
 /* GET content */
 router.get('/view/:id', function(req, res, next) {
     Content.findById(req.params.id).populate('_author _project').exec(function(err, content) {
@@ -53,7 +72,7 @@ router.post('/add', checkProjectId, function(req, res, next) {
         content.save(function(err) {
             if (err) return next(err);
             req.flash('success', 'Content created');
-            res.redirect('/project/view/' + project._id);
+            res.redirect('/content');
         });
     });
 });
@@ -84,7 +103,7 @@ router.post('/add-child/:parent', checkProjectId, function(req, res, next) {
             }, function(err) {
                 if (err) return next(err);
                 req.flash('success', 'Content created');
-                res.redirect('/project/view/' + project._id);
+                res.redirect('/content');
             });
         });
     });

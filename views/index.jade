@@ -1,14 +1,15 @@
-extends layout/scaffolding
+extends layout/logged-in
 
-block main
-    h1= title
-    p Welcome to #{title}
+block content
+    if session.projectName
+        h1 Current project: #{session.projectName}
+    else
+        h1 Select a project
     if projects
         ul
             each project in projects
                 li
                     | #{project.name} (#{moment(project.created).format('DD/MM/YYYY')}) 
-                    a(href="/project/view/#{project._id}") Manage
+                    a(href="/project/select/#{project._id}") Select
     ul
         li: a(href="/project/add") Create project
-        li: a(href="/logout") Logout

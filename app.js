@@ -17,6 +17,7 @@ var moment = require('moment');
 var mongoose = require('mongoose');
 config.db = require('./config/database.js');
 mongoose.connect(config.db.url);
+var Project = require('./models/project');
 
 // Authentication
 require('./config/passport')(passport);
@@ -36,11 +37,26 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Locals
 app.locals.moment = moment;
 app.use(function(req, res, next) {
     res.locals.user = req.user;
+    res.locals.session = req.session;
     next();
+});
+app.use(function(req, res, next) {
+    console.log(req.session.project)
+    if (req.session.project) {
+        Project.findById(req.session.project, function(err, project) {
+            if (err) return next(err);
+            res.locals.project = project;
+            next();
+        });
+    } else {
+        next();
+    }
 });
 
 // Routing
@@ -51,6 +67,8 @@ var api = require('./routes/api');
 
 app.use('/', routes);
 app.use('/api', api);
+
+
 
 app.all('*', function(req, res, next) {
     if (req.isAuthenticated()) {
@@ -63,8 +81,6 @@ app.all('*', function(req, res, next) {
 
 app.use('/project', project);
 app.use('/content', content);
-
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Error handlers
 app.use(function(req, res, next) {

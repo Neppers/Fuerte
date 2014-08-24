@@ -4,7 +4,11 @@ var mongoose = require('mongoose');
 
 var Content = require('../models/content');
 
-router.get('/content/:id', function(req, res, next) {
+router.get('/', function(req, res) {
+    res.render('api/index');
+});
+
+router.get('/content/:id', function(req, res) {
     if (mongoose.Types.ObjectId.isValid(req.params.id)) {
         Content.findById(req.params.id).populate('children _author').exec(function(err, content) {
             res.json(content);

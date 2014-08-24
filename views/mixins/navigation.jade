@@ -1,0 +1,5 @@
+mixin main-nav-item(text, href, icon)
+    li: a(href=href)
+        if icon
+            span.icon(class=icon)
+        | #{text}
