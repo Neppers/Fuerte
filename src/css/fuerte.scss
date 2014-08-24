@@ -59,11 +59,14 @@ main {
       text-decoration: none;
       line-height: 32px;
       transition: color .1s linear, background-color .1s linear;
+      text-align: center;
+      span {
+        display: none;
+      }
       > .icon {
         display: inline-block;
         vertical-align: middle;
         font-size: 32px;
-        margin-right: 15px;
       }
       &:hover {
         background-color: rgba(0,0,0,.35);
@@ -78,6 +81,15 @@ main {
       }
       &.is-current {
         border-right: 5px solid lighten($color-nav, 30%);
+      }
+      @media (min-width: $screen-md-min) {
+        text-align: left;
+        span {
+          display: inline;
+        }
+        > .icon {
+          margin-right: 15px;
+        }
       }
     }
   }

@@ -4,4 +4,4 @@ mixin main-nav-item(text, href, icon)
     li: a(href=href, class=linkClass)
         if icon
             span.icon(class=icon)
-        | #{text}
+        span #{text}
