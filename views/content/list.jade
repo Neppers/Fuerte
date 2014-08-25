@@ -2,11 +2,11 @@ extends ../layout/logged-in
 
 mixin actions(id, grandchild)
     .btn-group
-        a.btn.btn-default(href="/content/view/#{id}") View
+        a.btn(href="/content/view/#{id}"): span.glyphicon.glyphicon-eye-open
         if !grandchild
-            a.btn.btn-default(href="/content/add-child/#{id}") Add child
-        a.btn.btn-default(href="/content/edit/#{id}") Edit
-        a.btn.btn-default(href="/content/delete/#{id}") Delete
+            a.btn(href="/content/add-child/#{id}"): span.glyphicon.glyphicon-plus
+        a.btn(href="/content/edit/#{id}"): span.glyphicon.glyphicon-pencil
+        a.btn(href="/content/delete/#{id}"): span.glyphicon.glyphicon-trash
 
 mixin table-row(item, grandchild)
     - var statusClass = 'label-default'
