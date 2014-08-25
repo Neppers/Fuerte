@@ -5,6 +5,7 @@ $color-brand-3: #40a977;
 $color-brand-4: darken(#40a977, 10%);
 
 $brand-primary: $color-brand-3;
+$brand-success: $color-brand-3;
 
 $font-family-open-sans: 'Open Sans', sans-serif;
 
@@ -16,11 +17,11 @@ $color-nav: $color-brand-1;
 
 html, body {
   font-family: $font-family-open-sans;
-  color: #222;
+  background-color: $color-brand-2;
 }
 
-h1, h2, h3 {
-  font-weight: 300;
+h1, h2, h3, h4, h5, h6 {
+  color: #444;
 }
 
 main {
@@ -106,10 +107,10 @@ main {
 
 .table-content {
   .content-child > td:first-child {
-    padding-left: 30px - 8;
+    padding-left: 60px - 8;
   }
   .content-grandchild > td:first-child {
-    padding-left: 60px - 16;
+    padding-left: 120px - 16;
   }
 }
 
