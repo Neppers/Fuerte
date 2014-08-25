@@ -17,5 +17,5 @@ block content
                     tr
                         td=project.name
                         td=moment(project.created).format('DD/MM/YYYY')
-                        td: a.btn.btn-default(href="/project/select/#{project.id}") Select
-    a.btn.btn-default(href="/project/add") Create new project
+                        td: a.btn.btn-primary(href="/project/select/#{project.id}") Select
+    a.btn.btn-primary(href="/project/add") Create new project

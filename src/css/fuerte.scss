@@ -1,10 +1,18 @@
-@import "../../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap";
+// Fuerte variables
+$color-brand-1: #584b4f;
+$color-brand-2: #efeae1;
+$color-brand-3: #40a977;
+$color-brand-4: darken(#40a977, 10%);
 
-@import "modules/fonts";
+$brand-primary: $color-brand-3;
 
 $font-family-open-sans: 'Open Sans', sans-serif;
 
-$color-nav: rgb(91, 115, 114);
+$color-nav: $color-brand-1;
+
+@import "../../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap";
+
+@import "modules/fonts";
 
 html, body {
   font-family: $font-family-open-sans;
@@ -81,6 +89,7 @@ main {
       }
       &.is-current {
         border-right: 5px solid lighten($color-nav, 30%);
+        border-right-color: $color-brand-3;
       }
       @media (min-width: $screen-md-min) {
         text-align: left;

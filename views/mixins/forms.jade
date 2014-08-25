@@ -21,7 +21,7 @@ mixin textarea(label, path, labelClass, rows)
             block
 mixin submit(text, buttonType)
     if !buttonType
-        - buttonType = 'btn-default'
+        - buttonType = 'btn-primary'
     else
         - buttonType = 'btn-' + buttonType
     button.btn&attributes(attributes)(class=buttonType, type="submit", value=text)

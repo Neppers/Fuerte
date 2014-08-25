@@ -35,7 +35,7 @@ block content
         +messages(messages)
         .page-header
             h1
-                | #{project.name}  
+                | #{project.name}
                 small=project.url
         if content.length > 0
             table.table.table-content
@@ -59,4 +59,4 @@ block content
                                         +table-row(c, true)(class="content-grandchild")
         else
             p This project has no content
-        a.btn.btn-default(href="/content/add") Add content
+        a.btn.btn-primary(href="/content/add") Add content
