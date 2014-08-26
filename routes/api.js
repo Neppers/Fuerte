@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Content = require('../models/content');
+var Snippet = require('../models/snippet');
 
 var removeDrafts = function(content, includeDrafts) {
     if (includeDrafts) {
@@ -22,12 +23,8 @@ var populateChildren = function(content, callback) {
     }, callback);
 };
 
-router.all('*', function(req, res, next) {
-    res.locals.currentSection = 'API';
-    next();
-});
-
 router.get('/', function(req, res) {
+    res.locals.currentSection = 'API';
     if (req.isAuthenticated()) {
         res.render('api/index');
     } else {
@@ -38,7 +35,7 @@ router.get('/', function(req, res) {
 router.get('/content/:id', function(req, res) {    
     if (mongoose.Types.ObjectId.isValid(req.params.id)) {
         Content.findById(req.params.id).populate('children _author').exec(function(err, content) {
-            if (!content) res.json({status: 404, message: 'Not found'});
+            if (!content) return res.json(404, {status: 404, message: 'Not found'});
             populateChildren(content, function(err, content) {
                 res.json(removeDrafts(content, (req.query.includeDrafts === 'true')));
             });
@@ -47,10 +44,24 @@ router.get('/content/:id', function(req, res) {
         Content.findOne({
             'path': req.params.id
         }).populate('_author children').exec(function(err, content) {
-            if (!content) res.json({status: 404, message: 'Not found'});
+            if (!content) return res.json(404, {status: 404, message: 'Not found'});
             populateChildren(content, function(err, content) {
                 res.json(removeDrafts(content, (req.query.includeDrafts === 'true')));
             });
+        });
+    }
+});
+
+router.get('/snippet/:id', function(req, res) {
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+        Snippet.findById(req.params.id).populate('_author').exec(function(err, snippet) {
+            if (!snippet) return res.json(404, {status: 404, message: 'Not found'});
+            res.json(snippet);
+        });
+    } else {
+        Snippet.findOne({'path' : req.params.id}).populate('_author').exec(function(err, snippet) {
+            if (!snippet) return res.json(404, {status: 404, message: 'Not found'});
+            res.json(snippet);
         });
     }
 });

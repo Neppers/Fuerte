@@ -1,0 +1,10 @@
+extends ../layout/logged-in
+    
+block content
+    +messages(messages)
+    .page-header: h1 Edit snippet
+    form(action='/snippets/edit/#{snippet.id}', method="POST")
+        +input("text", "Path", "path")(value=snippet.path)
+        +textarea("Content", "body")
+            | #{snippet.body}
+        +submit('Save snippet')

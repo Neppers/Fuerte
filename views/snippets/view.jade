@@ -1,0 +1,24 @@
+extends ../layout/logged-in
+
+block content
+    .page-header: h1 Snippet: #{snippet.path}
+    dl
+        dt Path
+        dd=snippet.path
+        dt Body
+        dd=snippet.body
+        dt Author
+        dd=snippet._author.fullName
+        dt Last login
+        dd=moment(snippet._author.lastLogin).format('DD/MM/YYYY HH:mm')
+        dt Email
+        dd=snippet._author.local.email
+        dt Created
+        dd=moment(snippet.created).format('DD/MM/YYYY HH:mm')
+        dt Modified
+        dd=moment(snippet.modified).format('DD/MM/YYYY HH:mm')
+        dt Tags
+        if snippet.tags.length > 0
+            dd=snippet.tags.join(', ')
+        else
+            dd No tags

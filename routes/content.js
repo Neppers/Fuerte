@@ -1,14 +1,7 @@
 var express = require('express');
-var mongoose = require('mongoose');
 var router = express.Router();
 var Content = require('../models/content');
 var Project = require('../models/project');
-var checkProjectId = function(req, res, next) {
-//    if (req.session.project)
-//        next();
-//    next(new Error(400));
-    next();
-};
 
 router.all('*', function(req, res, next) {
     res.locals.currentSection = 'Content';
@@ -45,19 +38,19 @@ router.get('/view/:id', function(req, res, next) {
 });
 
 /* GET add content */
-router.get('/add', checkProjectId, function(req, res) {
+router.get('/add', function(req, res) {
     res.render('content/add');
 });
 
 /* GET add child content */
-router.get('/add-child/:parent', checkProjectId, function(req, res) {
+router.get('/add-child/:parent', function(req, res) {
     res.render('content/add', {
         parent: req.params.parent
     });
 });
 
 /* POST add content */
-router.post('/add', checkProjectId, function(req, res, next) {
+router.post('/add', function(req, res, next) {
     Project.findById(req.session.project, function(err, project) {
         if (err) return next(err);
 
@@ -67,7 +60,6 @@ router.post('/add', checkProjectId, function(req, res, next) {
         var content = new Content();
         content._project = project._id;
         content._author = req.user._id;
-        content.modified = Date.now();
         content.title = req.body.title;
         content.path = req.body.path;
         content.body = req.body.body;
@@ -83,7 +75,7 @@ router.post('/add', checkProjectId, function(req, res, next) {
 });
 
 /* POST add child content 8 */
-router.post('/add-child/:parent', checkProjectId, function(req, res, next) {
+router.post('/add-child/:parent', function(req, res, next) {
     Project.findById(req.session.project, function(err, project) {
         if (err) return next(err);
         if (!project || !req.user._id) return next(new Error(404));
@@ -92,7 +84,6 @@ router.post('/add-child/:parent', checkProjectId, function(req, res, next) {
         content._project = project._id;
         content._author = req.user._id;
         content._parent = req.params.parent;
-        content.modified = Date.now();
         content.title = req.body.title;
         content.path = req.body.path;
         content.body = req.body.body;

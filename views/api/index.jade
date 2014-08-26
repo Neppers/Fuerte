@@ -8,3 +8,13 @@ block content
     p Get content using ID, returns JSON
     pre: code /api/content/:path
     p Get content using path, returns JSON
+    p If no content is found, both requests will return a 404 with the following:
+    pre: code { status: "404", message: "Not found" }
+    p An extra boolean of <code>includePaths</code> can be passed if you want your response to include draft content, otherwise a 404 will be returned if draft content is requested
+    h2 Snippets
+    pre: code /api/snippets/:id
+    p Get snippet using ID, returns JSON
+    pre: code /api/snippets/:path
+    p Get snippet using path, returns JSON
+    p If no snippet is found, both requests will return a 404 with the following:
+    pre: code { status: "404", message: "Not found" }

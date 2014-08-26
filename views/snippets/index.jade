@@ -1,0 +1,29 @@
+extends ../layout/logged-in
+    
+block content
+    +messages(messages)
+    .page-header: h1 Snippets
+    if snippets.length > 0
+        table.table
+            thead
+                tr
+                    th Path
+                    th Author
+                    th Last modified
+                    th Actions
+                    th JSON
+            tbody
+                each snippet in snippets
+                    tr
+                        td=snippet.path
+                        td=snippet._author.fullName
+                        td=moment(snippet.modified).format('DD/MM/YYYY HH:mm')
+                        td
+                            .btn-group
+                                a.btn(href="/snippets/view/#{snippet.id}"): span.glyphicon.glyphicon-eye-open
+                                a.btn(href="/snippets/edit/#{snippet.id}"): span.glyphicon.glyphicon-pencil
+                                a.btn(href="/snippets/delete/#{snippet.id}"): span.glyphicon.glyphicon-trash
+                        td: a.btn.btn-default(href="/api/snippet/#{snippet.path}") JSON
+    else
+        p This project has no snippets
+    a.btn.btn-primary(href="/snippets/add") Add snippet
