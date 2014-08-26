@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Content = require('../models/content');
+var User = require('../models/user');
 var Project = require('../models/project');
 
 router.all('*', function(req, res, next) {
@@ -19,10 +20,14 @@ router.get('/', function(req, res, next) {
         Content.populate(content, {
             path: 'children.children'
         }, function(err, content) {
-            if (err) return next(err);
-            res.render('content/list', {
-                content: content
-            });
+            User.populate(content, {
+                path: 'children._author'
+            }, function(err, content) {
+                if (err) return next(err);
+                res.render('content/index', {
+                    content: content
+                });
+            })
         });
     });
 });

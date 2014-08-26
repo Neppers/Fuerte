@@ -19,11 +19,10 @@ block content
                         td=snippet._author.fullName
                         td=moment(snippet.modified).format('DD/MM/YYYY HH:mm')
                         td
-                            .btn-group
-                                a.btn(href="/snippets/view/#{snippet.id}"): span.glyphicon.glyphicon-eye-open
-                                a.btn(href="/snippets/edit/#{snippet.id}"): span.glyphicon.glyphicon-pencil
-                                a.btn(href="/snippets/delete/#{snippet.id}"): span.glyphicon.glyphicon-trash
-                        td: a.btn.btn-default(href="/api/snippet/#{snippet.path}") JSON
+                            a.btn-action(href="/snippets/view/#{snippet.id}"): span.glyphicon.glyphicon-eye-open
+                            a.btn-action(href="/snippets/edit/#{snippet.id}"): span.glyphicon.glyphicon-pencil
+                            a.btn-action(href="/snippets/delete/#{snippet.id}"): span.glyphicon.glyphicon-trash
+                        td: a.btn-action(href="/api/snippet/#{snippet.path}"): span.glyphicon.glyphicon-cloud
     else
         p This project has no snippets
     a.btn.btn-primary(href="/snippets/add") Add snippet

@@ -4,7 +4,7 @@ nav.main-nav(role="navigation")
         if session.project
             +main-nav-item('Inbox', '/inbox', 'icon-stack')
             +main-nav-item('Content', '/content', 'icon-pen')
-            +main-nav-item('Search', '#nyi', 'icon-search')
+            +main-nav-item('Search', '/search', 'icon-search')
             +main-nav-item('Assets', '#nyi', 'icon-photo')
             +main-nav-item('Snippets', '/snippets', 'icon-bubble')
             +main-nav-item('Tags', '#nyi', 'icon-tag')
@@ -12,9 +12,11 @@ nav.main-nav(role="navigation")
         else
             +main-nav-item('Inbox', '#', 'icon-stack')
             +main-nav-item('Content', '#', 'icon-pen')
-            +main-nav-item('Search', '#nyi', 'icon-search')
+            +main-nav-item('Search', '#', 'icon-search')
             +main-nav-item('Assets', '#nyi', 'icon-photo')
             +main-nav-item('Snippets', '#', 'icon-bubble')
             +main-nav-item('Tags', '#nyi', 'icon-tag')
         +main-nav-item('API', '/api', 'icon-lab')
-        li.nav-link-sm: a(href="/logout") Logout
+        li.nav-link-sm: a(href="/logout") 
+            | Logout 
+            span.glyphicon.glyphicon-log-out

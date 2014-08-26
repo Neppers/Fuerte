@@ -27,6 +27,10 @@ gulp.task('styles', function() {
         .pipe(gulp.dest('public/stylesheets'));
 });
 
+gulp.task('scripts', function() {
+    return gulp.src('src/js/**/*.js').pipe(gulp.dest('public/javascripts'));
+});
+
 gulp.task('fonts', function() {
     gulp.src('src/fonts/**/*.*').pipe(gulp.dest('public/fonts'));
     gulp.src('bower_components/bootstrap-sass-official/assets/fonts/bootstrap/**/*.*').pipe(gulp.dest('public/fonts/bootstrap'));
@@ -37,6 +41,9 @@ gulp.task('watch', function() {
         console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     };
     gulp.watch('src/css/**/*.scss', ['styles']).on('change', function(event) {
+        log(event);
+    });
+    gulp.watch('src/js/**/*.js', ['scripts']).on('change', function(event) {
         log(event);
     });
 });

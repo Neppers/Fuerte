@@ -36,3 +36,7 @@ block content
                 dt Email
                 dd=content._author.local.email
     .content=content.body
+    .btn-group
+        a.btn.btn-primary(href="/content/edit/#{content.id}") Edit
+        a.btn.btn-default(href="/content/delete/#{content.id}") Delete
+        a.btn.btn-default(href="/api/content/#{content.id}") JSON

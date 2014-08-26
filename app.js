@@ -65,6 +65,7 @@ var content = require('./routes/content');
 var api = require('./routes/api');
 var inbox = require('./routes/inbox');
 var snippets = require('./routes/snippets');
+var search = require('./routes/search');
 
 app.use('/', routes);
 app.use('/api', api);
@@ -82,6 +83,7 @@ app.use('/project', project);
 app.use('/content', content);
 app.use('/inbox', inbox);
 app.use('/snippets', snippets);
+app.use('/search', search);
 
 // Error handlers
 app.use(function(req, res, next) {

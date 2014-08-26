@@ -1,12 +1,11 @@
 extends ../layout/logged-in
 
 mixin actions(id, grandchild)
-    .btn-group
-        a.btn(href="/content/view/#{id}"): span.glyphicon.glyphicon-eye-open
-        if !grandchild
-            a.btn(href="/content/add-child/#{id}"): span.glyphicon.glyphicon-plus
-        a.btn(href="/content/edit/#{id}"): span.glyphicon.glyphicon-pencil
-        a.btn(href="/content/delete/#{id}"): span.glyphicon.glyphicon-trash
+    a.btn-action(href="/content/view/#{id}"): span.glyphicon.glyphicon-eye-open
+    if !grandchild
+        a.btn-action(href="/content/add-child/#{id}"): span.glyphicon.glyphicon-plus
+    a.btn-action(href="/content/edit/#{id}"): span.glyphicon.glyphicon-pencil
+    a.btn-action(href="/content/delete/#{id}"): span.glyphicon.glyphicon-trash
 
 mixin table-row(item, grandchild)
     - var statusClass = 'label-default'
@@ -20,7 +19,7 @@ mixin table-row(item, grandchild)
         td=item._author.fullName
         td=moment(item.modified).format('DD/MM/YYYY HH:mm')
         td: +actions(item.id, grandchild)
-        td: a.btn.btn-default(href="/api/content/#{item.id}") JSON
+        td: a.btn-action(href="/api/content/#{item.id}"): span.glyphicon.glyphicon-cloud
         td
             if item.status == 'published'
                 a.btn.btn-warning(href="/content/draft/#{item.id}")

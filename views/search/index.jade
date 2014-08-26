@@ -1,0 +1,29 @@
+extends ../layout/logged-in
+    
+block content
+    .page-header: h1 Search content
+    div(ng-app="SearchContent")
+        div(ng-controller="SearchCtrl")
+            +input('text', 'Keyword', 'keyword')(ng-model="keyword")
+            table.table
+                thead
+                    tr
+                        th Ref.
+                        th Title
+                        th Path
+                        th Status
+                        th Author
+                        th Actions
+                tbody
+                    tr(ng-repeat="content in content | filter:keyword")
+                        td {{content.id}}
+                        td {{content.title}}
+                        td {{content.path}}
+                        td {{content.status}}
+                        td {{content._author.fullName}}
+                        td
+                            a.btn-action(href="/content/view/{{content.id}}"): span.glyphicon.glyphicon-eye-open
+                            a.btn-action(href="/content/edit/{{content.id}}"): span.glyphicon.glyphicon-pencil
+                            a.btn-action(href="/content/delete/{{content.id}}"): span.glyphicon.glyphicon-trash
+    script(src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js")
+    script(src="/javascripts/search.js")
