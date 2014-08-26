@@ -1,6 +1,6 @@
 // Fuerte variables
 $color-brand-1: #584b4f;
-$color-brand-2: #efeae1;
+$color-brand-2: #fbfaf8;
 $color-brand-3: #40a977;
 $color-brand-4: darken(#40a977, 10%);
 
@@ -63,7 +63,7 @@ main {
     > li > a {
       font-weight: 300;
       display: block;
-      padding: 20px;
+      padding: 10px;
       color: darken(#fff, 15%);
       text-decoration: none;
       line-height: 32px;
@@ -75,7 +75,10 @@ main {
       > .icon {
         display: inline-block;
         vertical-align: middle;
-        font-size: 32px;
+        font-size: 24px;
+        @media (min-width: $screen-sm-min) {
+          font-size: 32px;
+        }
       }
       &:hover {
         background-color: rgba(0,0,0,.35);
@@ -91,6 +94,9 @@ main {
       &.is-current {
         border-right: 5px solid lighten($color-nav, 30%);
         border-right-color: $color-brand-3;
+      }
+      @media (min-width: $screen-sm-min) {
+        padding: 20px;
       }
       @media (min-width: $screen-md-min) {
         text-align: left;
