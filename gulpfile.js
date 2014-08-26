@@ -28,7 +28,8 @@ gulp.task('styles', function() {
 });
 
 gulp.task('fonts', function() {
-    return gulp.src('src/fonts/**/*.*').pipe(gulp.dest('public/fonts'));
+    gulp.src('src/fonts/**/*.*').pipe(gulp.dest('public/fonts'));
+    gulp.src('bower_components/bootstrap-sass-official/assets/fonts/bootstrap/**/*.*').pipe(gulp.dest('public/fonts/bootstrap'));
 });
 
 gulp.task('watch', function() {
