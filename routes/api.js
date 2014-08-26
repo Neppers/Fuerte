@@ -32,6 +32,7 @@ router.get('/', function(req, res) {
     }    
 });
 
+/* CONTENT Single item */
 router.get('/content/:id', function(req, res) {    
     if (mongoose.Types.ObjectId.isValid(req.params.id)) {
         Content.findById(req.params.id).populate('children _author').exec(function(err, content) {
@@ -52,6 +53,17 @@ router.get('/content/:id', function(req, res) {
     }
 });
 
+/* Content All items in project */
+router.get('/content/project/:id', function(req, res) {
+    Content.find({
+        '_project': req.params.id
+    }).populate('_author').exec(function(err, content) {
+        if (err) return res.json(500, err);
+        res.json(content);
+    });
+});
+
+/* SNIPPETS */
 router.get('/snippet/:id', function(req, res) {
     if (mongoose.Types.ObjectId.isValid(req.params.id)) {
         Snippet.findById(req.params.id).populate('_author').exec(function(err, snippet) {

@@ -1,8 +1,7 @@
 extends layout/logged-in
 
 block content
-    .page-header
-        h1 Select a project
+    .page-header: h1=(project) ? 'Switch project' : 'Select a project'
     if projects
         table.table
             thead
@@ -11,9 +10,9 @@ block content
                     th Created
                     th Actions
             tbody
-                each project in projects
+                each pro in projects
                     tr
-                        td=project.name
-                        td=moment(project.created).format('DD/MM/YYYY')
-                        td: a.btn.btn-primary(href="/project/select/#{project.id}") Select
+                        td=pro.name
+                        td=moment(pro.created).format('DD/MM/YYYY')
+                        td: a.btn.btn-primary(href="/project/select/#{pro.id}")=(project) ? 'Switch' : 'Select'
     a.btn.btn-primary(href="/project/add") Create new project
