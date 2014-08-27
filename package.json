@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+      "install": "bower install;",
+      "start": "gulp; nodemon ./bin/www"
   },
   "dependencies": {
     "express": "~4.2.0",

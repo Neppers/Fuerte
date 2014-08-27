@@ -15,10 +15,6 @@ Assuming both Node and MongoDB are already installed
 
 ```npm install```
 
-```bower install```
-
-```gulp styles && gulp scripts && gulp fonts```
-
 ```npm start```
 
 Default port is 3000

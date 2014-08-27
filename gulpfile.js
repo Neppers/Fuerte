@@ -36,6 +36,8 @@ gulp.task('fonts', function() {
     gulp.src('bower_components/bootstrap-sass-official/assets/fonts/bootstrap/**/*.*').pipe(gulp.dest('public/fonts/bootstrap'));
 });
 
+gulp.task('default', ['styles', 'scripts', 'fonts']);
+
 gulp.task('watch', function() {
     var log = function(event) {
         console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
