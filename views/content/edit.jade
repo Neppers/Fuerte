@@ -5,10 +5,18 @@ block content
         h1 Edit #{content.title}
     
     form(action="/content/edit/#{content.id}", method="POST")
-        +input("text", "Title", "title")(value=content.title)
-        +input("text", "Path", "path")(value=content.path)
-        +textarea("Content", "body")
-            | #{content.body}
-        +input("text", "Meta description", "meta.description")(value=content.meta.description)
-        +input("text", "Meta keywords", "meta.keywords")(value=content.meta.keywords)
+        .row
+            .col-sm-4
+                +input("text", "Title", "title")(value=content.title)
+                +input("text", "Path", "path")(value=content.path)
+                +input("text", "Meta description", "meta.description")(value=content.meta.description)
+                +input("text", "Meta keywords", "meta.keywords")(value=content.meta.keywords)
+            .col-sm-8
+                +textarea("Content", "body")
+                    | #{content.body}
         +submit("Save content")
+
+block scripts
+    script(src="/javascripts/ckeditor/ckeditor.js")
+    script.
+        CKEDITOR.replace('body', {customConfig: '/javascripts/ckeditor-config.js'});

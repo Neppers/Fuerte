@@ -121,7 +121,7 @@ router.get('/edit/:id', function(req, res) {
 });
 
 /* POST edit content */
-router.post('/edit/:id', function(req, res) {
+router.post('/edit/:id', function(req, res, next) {
     Content.findByIdAndUpdate(req.params.id, {
         title: req.body.title,
         body: req.body.body,

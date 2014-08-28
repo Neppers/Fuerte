@@ -7,9 +7,17 @@ block content
     - formAction = (parent) ? '/content/add-child/' + parent : '/content/add'
 
     form(action=formAction, method="POST")
-        +input("text", "Title", "title")
-        +input("text", "Path", "path")
-        +textarea("Content", "body")
-        +input("text", "Meta description", "meta.description")
-        +input("text", "Meta keywords", "meta.keywords")
+        .row
+            .col-sm-4
+                +input("text", "Title", "title")
+                +input("text", "Path", "path")
+                +input("text", "Meta description", "meta.description")
+                +input("text", "Meta keywords", "meta.keywords")
+            .col-sm-8
+                +textarea("Content", "body")
         +submit("Add content")
+            
+block scripts
+    script(src="/javascripts/ckeditor/ckeditor.js")
+    script.
+        CKEDITOR.replace('body', {customConfig: '/javascripts/ckeditor-config.js'});

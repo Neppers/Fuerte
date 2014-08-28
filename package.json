@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
       "install": "bower install;",
-      "start": "gulp; nodemon ./bin/www -q -i src"
+      "start": "gulp; nodemon ./bin/www -q -i src/ -i bower_components -i node_modules -i public/"
   },
   "dependencies": {
     "express": "~4.2.0",

@@ -36,7 +36,11 @@ gulp.task('fonts', function() {
     gulp.src('bower_components/bootstrap-sass-official/assets/fonts/bootstrap/**/*.*').pipe(gulp.dest('public/fonts/bootstrap'));
 });
 
-gulp.task('default', ['styles', 'scripts', 'fonts']);
+gulp.task('ckeditor', function() {
+    gulp.src('bower_components/ckeditor/**/*.*').pipe(gulp.dest('public/javascripts/ckeditor'));
+});
+
+gulp.task('default', ['styles', 'scripts', 'fonts', 'ckeditor']);
 
 gulp.task('watch', function() {
     var log = function(event) {
