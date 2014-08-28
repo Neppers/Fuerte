@@ -3,7 +3,7 @@ extends ../layout/logged-in
 block content
     .page-header: h1 Search content
     div(ng-app="SearchContent")
-        div(ng-controller="SearchCtrl")
+        div(ng-controller="SearchCtrl", data-id=project.id)
             +input('text', 'Keyword', 'keyword')(ng-model="keyword")
             table.table
                 thead
