@@ -98,6 +98,7 @@ router.post('/add', function(req, res, next) {
         content.title = req.body.title;
         content.path = req.body.path;
         content.body = req.body.body;
+        content.template = req.body.template;
         content.meta.description = req.body["meta.description"];
         content.meta.keywords = req.body["meta.keywords"].split(',').map(function(s) { return s.trim() });
 
@@ -128,6 +129,7 @@ router.post('/add-child/:parent', function(req, res, next) {
         content.title = req.body.title;
         content.path = req.body.path;
         content.body = req.body.body;
+        content.template = req.body.template;
         content.meta.description = req.body["meta.description"];
         content.meta.keywords = req.body["meta.keywords"].split(',').map(function(s) { return s.trim() });
 
@@ -172,6 +174,7 @@ router.post('/edit/:id', function(req, res) {
         content.title = req.body.title;
         content.path = req.body.path;
         content.body = req.body.body;
+        content.template = req.body.template;
         content.meta.description = req.body["meta.description"];
         content.meta.keywords = req.body["meta.keywords"].split(',').map(function(s) { return s.trim() });
 

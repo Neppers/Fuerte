@@ -25,6 +25,10 @@ var contentSchema = mongoose.Schema({
         required: true,
         unique: true
     },
+    template: {
+        type: String,
+        default: 'basic-content'
+    },
     body: String,
     created: {
         type: Date,
