@@ -5,6 +5,6 @@ block content
         h1 Add project
     +messages(messages)
     form.form(action="/project/add", method="POST")
-        +input("text", "Name", "name")
-        +input("url", "URL", "url")
+        +input("text", "Name", "name")(value=(form) ? form.name : '')
+        +input("url", "URL", "url")(value=(form) ? form.url : '')
         button.btn.btn-primary(type="submit") Create project

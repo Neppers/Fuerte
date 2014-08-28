@@ -15,11 +15,14 @@ var contentSchema = mongoose.Schema({
     },
     title: {
         type: String,
+        index: true,
         required: true
     },
     path: {
         type: String,
-        required: true
+        index: true,
+        required: true,
+        unique: true
     },
     body: String,
     created: {

@@ -1,17 +1,17 @@
 mixin messages(messages)
     if messages.error
         .alert.alert-danger
-            each message in messages
+            each message in messages.error
                 p=message
     if messages.info
         .alert.alert-info
-            each message in messages
+            each message in messages.info
                 p=message
     if messages.warning
         .alert.alert-warning
-            each message in messages
+            each message in messages.warning
                 p=message
     if messages.success
         .alert.alert-success
-            each message in messages
+            each message in messages.success
                 p=message

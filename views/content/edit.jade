@@ -1,19 +1,17 @@
 extends ../layout/logged-in
     
 block content
-    .page-header
-        h1 Edit #{content.title}
-    
+    .page-header: h1 Edit #{content.title}
+    +messages(messages)    
     form(action="/content/edit/#{content.id}", method="POST")
         .row
             .col-sm-4
-                +input("text", "Title", "title")(value=content.title)
-                +input("text", "Path", "path")(value=content.path)
-                +input("text", "Meta description", "meta.description")(value=content.meta.description)
-                +input("text", "Meta keywords", "meta.keywords")(value=content.meta.keywords)
+                +input("text", "Title", "title")(value=form.title || content.title)
+                +input("text", "Path", "path")(value=form.path || content.path)
+                +input("text", "Meta description", "meta.description")(value=form['meta.description'] || content.meta.description)
+                +input("text", "Meta keywords", "meta.keywords")(value=form['meta.keywords'] || content.meta.keywords)
             .col-sm-8
-                +textarea("Content", "body")
-                    | #{content.body}
+                +textarea("Content", "body")=form.body || content.body
         +submit("Save content")
 
 block scripts

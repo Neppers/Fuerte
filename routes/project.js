@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Project = require('../models/project');
 var Content = require('../models/content');
+var ValidationErrors = require('../middleware/validation-error-handler');
 
 router.all('*', function(req, res, next) {
     res.locals.currentSection = 'Projects';
@@ -26,10 +27,11 @@ router.post('/add', function(req, res, next) {
             newProject.url = req.body.url;
             newProject.save(function(err) {
                 if (err) {
-                    Object.keys(err.errors).forEach(function(key) {
-                        req.flash('error', err.errors[key].message);
+                    ValidationErrors.flash(req, err);
+                    console.log(req.body);
+                    res.render('project/add', {
+                        form: req.body
                     });
-                    res.redirect('/project/add');
                 } else {
                     req.flash('success', 'Project created');
                     res.redirect('/');

@@ -3,6 +3,7 @@ var router = express.Router();
 var Content = require('../models/content');
 var User = require('../models/user');
 var Project = require('../models/project');
+var ValidationErrors = require('../middleware/validation-error-handler');
 
 router.all('*', function(req, res, next) {
     res.locals.currentSection = 'Content';
@@ -44,13 +45,14 @@ router.get('/view/:id', function(req, res, next) {
 
 /* GET add content */
 router.get('/add', function(req, res) {
-    res.render('content/add');
+    res.render('content/add', { form: {} });
 });
 
 /* GET add child content */
 router.get('/add-child/:parent', function(req, res) {
     res.render('content/add', {
-        parent: req.params.parent
+        parent: req.params.parent,
+        form: {}
     });
 });
 
@@ -97,9 +99,15 @@ router.post('/add', function(req, res, next) {
         content.meta.keywords = req.body["meta.keywords"].split(',').map(function(s) { return s.trim() });
 
         content.save(function(err) {
-            if (err) return next(err);
-            req.flash('success', 'Content created');
-            res.redirect('/content');
+            if (err) {
+                ValidationErrors.flash(req, err);
+                res.render('content/add', {
+                    form: req.body
+                });
+            } else {
+                req.flash('success', 'Content created');
+                res.redirect('/content');
+            }
         });
     });
 });
@@ -127,9 +135,15 @@ router.post('/add-child/:parent', function(req, res, next) {
                     children: item._id
                 }
             }, function(err) {
-                if (err) return next(err);
-                req.flash('success', 'Content created');
-                res.redirect('/content');
+                if (err) {
+                    ValidationErrors.flash(req, err);
+                    res.render('/content/add-child/' + req.params.parent, {
+                        form: req.body
+                    });
+                } else {
+                    req.flash('success', 'Content created');
+                    res.redirect('/content');
+                }
             });
         });
     });
@@ -139,27 +153,37 @@ router.post('/add-child/:parent', function(req, res, next) {
 router.get('/edit/:id', function(req, res) {
     Content.findById(req.params.id, function(err, content) {
         if (err) return next(err);
+        content.meta.keywords = content.meta.keywords.join(', ');
         res.render('content/edit', {
-            content: content
+            content: content,
+            form: {}
         });
     });
 });
 
 /* POST edit content */
-router.post('/edit/:id', function(req, res, next) {
-    Content.findByIdAndUpdate(req.params.id, {
-        title: req.body.title,
-        body: req.body.body,
-        path: req.body.path,
-        meta: {
-            description: req.body['meta.description'],
-            keywords: req.body['meta.keywords'].split(',').map(function(s) { return s.trim() })
-        },
-        modified: Date.now()
-    }, function(err, content) {
+router.post('/edit/:id', function(req, res) {
+    Content.findById(req.params.id, function(err, content) {
         if (err) return next(err);
-        req.flash('success', 'Content updated');
-        res.redirect('/content');
+        
+        content.title = req.body.title;
+        content.path = req.body.path;
+        content.body = req.body.body;
+        content.meta.description = req.body["meta.description"];
+        content.meta.keywords = req.body["meta.keywords"].split(',').map(function(s) { return s.trim() });
+
+        content.save(function(err) {
+            if (err) {
+                ValidationErrors.flash(req, err);
+                res.render('content/edit', {
+                    content: content,
+                    form: req.body
+                });
+            } else {
+                req.flash('success', 'Content created');
+                res.redirect('/content');
+            }
+        });
     });
 });
 
