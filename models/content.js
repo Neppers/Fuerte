@@ -22,8 +22,7 @@ var contentSchema = mongoose.Schema({
     path: {
         type: String,
         index: true,
-        required: true,
-        unique: true
+        required: true
     },
     template: {
         type: String,
