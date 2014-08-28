@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var S = require('string');
 
 var contentSchema = mongoose.Schema({
     _project: {
@@ -52,6 +53,14 @@ var contentSchema = mongoose.Schema({
     }
 });
 
+contentSchema.virtual('plain').get(function() {
+    return S(this.body).stripTags().s;
+});
+
+contentSchema.virtual('lead').get(function() {
+    return S(this.body).stripTags().truncate(65).s;
+});
+
 contentSchema.set('toObject', { virtuals: true });
 
 contentSchema.set('toJSON', {
@@ -65,9 +74,6 @@ contentSchema.set('toJSON', {
 
 var Content = mongoose.model('Content', contentSchema);
 
-contentSchema.virtual('plain').get(function() {
-    //TODO: Not yet implemented
-    return this.body;
-});
+
 
 module.exports = Content;

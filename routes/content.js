@@ -61,20 +61,23 @@ router.get('/populate/:num', function(req, res, next) {
         Project.findById(req.session.project, function (err, project) {
             if (err) return next(err);
             if (!project || !req.user._id) return next(new Error(404));
-            for (var i = 0; i < req.params.num; i++) {
-                var content = new Content();
-                content._project = project._id;
-                content._author = req.user._id;
-                content.title = "Dummy content " + i;
-                content.path = "dummy-content-" + i;
-                content.status = 'published';
-                content.body = "The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the Lord when I lay My vengeance upon thee.";
-                content.save(function (err) {
-                    if (err) return next(err);
-                });
-            }
-            req.flash('success', 'Content populated');
-            res.redirect('/content');
+            Content.remove({'_project' : req.session.project}, function() {
+                for (var i = 1; i <= req.params.num; i++) {
+                    var content = new Content();
+                    content._project = project._id;
+                    content._author = req.user._id;
+                    content.title = "Dummy content " + i;
+                    content.path = "dummy-content-" + i;
+                    content.status = (Math.floor(Math.random() * (2) + 1) > 1) ? 'published': 'draft';
+                    var randomId = Math.floor(Math.random() * (10) + 1);
+                    content.body = '<p>The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother\'s keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. <em>And you will know My name is the Lord when I lay My vengeance upon thee.</em></p><table border="0" cellpadding="0" cellspacing="0" class="table" style="width:100%"><thead><tr><th scope="col">Metric</th><th scope="col">Percentage</th></tr></thead><tbody><tr><td>A</td><td>40%</td></tr><tr><td>B</td><td>60%</td></tr></tbody></table><ul><li>I am a list<ul><li>I am inside a list</li></ul></li><li>I am not inside a list</li></ul><p><img alt="" src="http://place.manatee.lc/' + randomId + '/400/200.jpg"></p>';
+                    content.save(function (err) {
+                        if (err) return next(err);
+                    });
+                }
+                req.flash('success', 'Content populated');
+                res.redirect('/content');
+            });
         });
     } else {
         return next(new Error(400));
