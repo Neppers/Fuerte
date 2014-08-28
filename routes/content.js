@@ -175,6 +175,7 @@ router.post('/edit/:id', function(req, res) {
         content.path = req.body.path;
         content.body = req.body.body;
         content.template = req.body.template;
+        content.modified = Date.now();
         content.meta.description = req.body["meta.description"];
         content.meta.keywords = req.body["meta.keywords"].split(',').map(function(s) { return s.trim() });
 
@@ -186,7 +187,7 @@ router.post('/edit/:id', function(req, res) {
                     form: req.body
                 });
             } else {
-                req.flash('success', 'Content created');
+                req.flash('success', 'Content saved');
                 res.redirect('/content');
             }
         });
@@ -212,7 +213,7 @@ router.get('/delete/:id', function(req, res) {
                     $pull: {
                         "children": content.id
                     }
-                }, function(err, result) {
+                }, function(err) {
                     if (err) return next(err);
                     req.flash('success', 'Content deleted successfully');
                     res.redirect('/content')

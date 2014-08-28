@@ -16,12 +16,10 @@ var contentSchema = mongoose.Schema({
     },
     title: {
         type: String,
-        index: true,
         required: true
     },
     path: {
         type: String,
-        index: true,
         required: true
     },
     template: {
