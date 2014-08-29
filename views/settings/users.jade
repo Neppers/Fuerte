@@ -1,0 +1,32 @@
+extends ../layout/logged-in
+    
+block content
+    .page-header: h1 Manage users
+    +messages(messages)
+    ul.nav.nav-tabs(role="tablist")
+        li.active: a(href="/settings/users")
+            span.icon.icon-user
+            |  Users
+        li: a(href="/settings/projects")
+            span.icon.icon-wallet
+            |  Projects
+    table.table
+        thead
+            th Name
+            th Email
+            th Role
+            th Created
+            th Last login
+            th Actions
+        tbody
+            each u in users
+                tr
+                    td=u.fullName
+                    td=u.local.email
+                    td=u.role
+                    td=moment(u.created).format('DD/MM/YYYY HH:mm')
+                    td=moment(u.lastLogin).format('DD/MM/YYYY HH:mm')
+                    td
+                        a.btn-action(href="/settings/users/edit/#{u.id}"): span.glyphicon.glyphicon-pencil
+                        if (u.id !== user.id)
+                            a.btn-action(href="/settings/users/delete/#{u.id}"): span.glyphicon.glyphicon-trash

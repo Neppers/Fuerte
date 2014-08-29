@@ -1,0 +1,12 @@
+extends ../../layout/logged-in
+
+block content
+    .page-header: h1 Edit #{u.fullName}
+    +messages(messages)
+    form(action="/settings/users/edit/#{u.id}", method="POST")
+        +input("text", "First name", "firstName")(value=form.firstName || u.firstName)
+        +input("text", "Last name", "lastName")(value=form.lastName || u.lastName)
+        - var roles = [{'text': 'Admin', 'value': 'admin'}, {'text': 'Writer', 'value': 'writer'}]
+        - var currentRole = form.role || u.role
+        +select("Role", "role", roles, currentRole)
+        +submit('Save changes')

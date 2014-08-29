@@ -15,7 +15,8 @@ nav.main-nav(role="navigation")
             +main-nav-item('Assets', '#nyi', 'icon-photo')
             +main-nav-item('Snippets', '#', 'icon-bubble')
             +main-nav-item('Tags', '#nyi', 'icon-tag')
-        +main-nav-item('System', '#nyi', 'icon-settings')
+        if user.role === 'admin'
+            +main-nav-item('System', '/settings', 'icon-settings')
         +main-nav-item('API', '/api', 'icon-lab')
         li.nav-link-sm: a(href="/logout") 
             | Logout 

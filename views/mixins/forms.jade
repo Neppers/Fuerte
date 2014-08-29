@@ -2,6 +2,12 @@ mixin input(type, label, path, placeholder, labelClass)
     .form-group
         label(for=path, class=labelClass)=label
         input.form-control&attributes(attributes)(type=type, id=path, name=path, placeholder=placeholder)
+mixin select(label, path, items, selectedItem)
+    .form-group
+        label(for=path)=label
+        select.form-control&attributes(attributes)(name=path, id=path)
+            each item in items
+                option(value=item.value, selected=(item.value === selectedItem))=item.text
 mixin checkbox(label, path)
     .checkbox
         label

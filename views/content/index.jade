@@ -23,11 +23,11 @@ mixin table-row(item, grandchild)
         td: a.btn-action(href="/api/content/#{item.id}"): span.glyphicon.glyphicon-cloud
         td
             if item.status == 'published'
-                a.btn.btn-warning(href="/content/draft/#{item.id}")
+                a.btn.btn-block.btn-warning(href="/content/draft/#{item.id}")
                     span.icon.icon-fire
                     | Unpublish
             if item.status == 'draft'
-                a.btn.btn-success(href="/content/publish/#{item.id}")
+                a.btn.btn-block.btn-success(href="/content/publish/#{item.id}")
                     span.icon.icon-paperplane
                     | Publish
 
