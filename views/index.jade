@@ -15,4 +15,3 @@ block content
                         td=pro.name
                         td=moment(pro.created).format('DD/MM/YYYY')
                         td: a.btn.btn-primary(href="/project/select/#{pro.id}")=(project) ? 'Switch' : 'Select'
-    a.btn.btn-primary(href="/project/add") Create new project

@@ -1,0 +1,9 @@
+extends ../../layout/logged-in
+    
+block content
+    .page-header: h1 Add project
+    +messages(messages)
+    form.form(action="/settings/projects/add", method="POST")
+        +input("text", "Name", "name")(value=form.name)
+        +input("url", "URL", "url")(value=form.url)
+        +submit("Create project")

@@ -93,4 +93,39 @@ router.get('/projects', function(req, res, next) {
     })
 });
 
+/* GET add project */
+router.get('/projects/add', function(req, res) {
+    res.render('settings/project/add', {
+        form: {}
+    });
+});
+
+/* POST add project */
+router.post('/projects/add', function(req, res, next) {
+    Project.findOne({'name': req.body.name}, function(err, project) {
+        if (err) return next(err);
+        if (project) {
+            req.flash('error', 'Project with name already exists');
+            res.render('settings/project/add', {
+                form: req.body
+            });
+        } else {
+            var newProject = new Project();
+            newProject.name = req.body.name;
+            newProject.url = req.body.url;
+            newProject.save(function(err) {
+                if (err) {
+                    ValidationErrors.flash(req, err);
+                    res.render('settings/project/add', {
+                        form: req.body
+                    });
+                }else {
+                    req.flash('success', "Project created");
+                    res.redirect('/settings/projects');
+                }
+            });
+        }
+    });
+});
+
 module.exports = router;
