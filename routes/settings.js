@@ -128,4 +128,13 @@ router.post('/projects/add', function(req, res, next) {
     });
 });
 
+/* GET delete project */
+router.get('/projects/delete/:id', function(req, res, next) {
+    Project.findByIdAndRemove(req.params.id, function(err) {
+        if (err) return next(err);
+        req.flash('success', 'Project deleted');
+        res.redirect('/settings/projects');
+    });
+});
+
 module.exports = router;
