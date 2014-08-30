@@ -39,10 +39,6 @@ router.get('/users/edit/:id', function(req, res, next) {
 router.post('/users/edit/:id', function(req, res, next) {
     User.findById(req.params.id, function(err, user) {
         if (err) return next(err);
-        console.log(user.id);
-        console.log(req.user.id);
-        console.log(user.role);
-        console.log(req.user.role);
         if (user.id === req.user.id && user.role !== req.body.role) {
             req.flash('error', 'You cannot edit your own role');
             res.render('settings/user/edit', {
@@ -119,12 +115,46 @@ router.post('/projects/add', function(req, res, next) {
                     res.render('settings/project/add', {
                         form: req.body
                     });
-                }else {
+                } else {
                     req.flash('success', "Project created");
                     res.redirect('/settings/projects');
                 }
             });
         }
+    });
+});
+
+/* GET edit project */
+router.get('/projects/edit/:id', function(req, res, next) {
+    Project.findById(req.params.id, function(err, project) {
+        if (err) return next(err);
+        if (!project) return next(new Error(404));
+        res.render('settings/project/edit', {
+            project: project,
+            form: project
+        });
+    });
+});
+
+/* POST edit project */
+router.post('/projects/edit/:id', function(req, res, next) {
+    Project.findById(req.params.id, function(err, project) {
+        if (err) return next(err);
+        if (!project) return next(new Error(404));
+        project.name = req.body.name;
+        project.url = req.body.url;
+        project.save(function(err) {
+            if (err) {
+                ValidationErrors.flash(req, err);
+                res.render('settings/project/edit', {
+                    project: project,
+                    form: req.body
+                });
+            } else {
+                req.flash('success', 'Project saved');
+                res.redirect('/settings/projects');
+            }
+        });
     });
 });
 

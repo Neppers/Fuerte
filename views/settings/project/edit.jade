@@ -1,0 +1,9 @@
+extends ../../layout/logged-in
+    
+block content
+    .page-header: h1 Edit #{project.name}
+    +messages(messages)
+    form.form(action="/settings/projects/edit/#{project.id}", method="POST")
+        +input("text", "Name", "name")(value=form.name)
+        +input("url", "URL", "url")(value=form.url)
+        +submit("Save changes")    

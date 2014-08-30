@@ -23,6 +23,6 @@ block content
                 td=project.url
                 td=moment(project.created).format('DD/MM/YYYY HH:mm')
                 td
-                    a.btn-action(href="#"): span.glyphicon.glyphicon-pencil
+                    a.btn-action(href="/settings/projects/edit/#{project.id}"): span.glyphicon.glyphicon-pencil
                     a.btn-action(href="/settings/projects/delete/#{project.id}"): span.glyphicon.glyphicon-trash
     a.btn.btn-primary(href="/settings/projects/add") Create project
